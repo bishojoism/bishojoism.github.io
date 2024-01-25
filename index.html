@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>喵喵隐者8</title>
+    <meta name="description" content="一个由cnmmail163@163.com制作的文本隐写工具。">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        header {
+            z-index: 1;
+            position: relative;
+            left: 0;
+            top: 0;
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2vw;
+            height: 10vw;
+        }
+
+        h1 {
+            font-size: 6vw;
+            width: 80vw;
+        }
+
+        button {
+            cursor: pointer;
+            border: 0;
+            border-radius: 50%;
+            background-color: transparent;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 10vw;
+            height: 10vw;
+            background-size: 5vw;
+        }
+
+        button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            transition: 0.2s;
+        }
+
+        button:active {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        #背景 {
+            left: 0;
+            top: 0;
+            width: auto;
+            height: 100%;
+            position: fixed
+        }
+
+        #俩框 {
+            display: none;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 10vw 2vw;
+        }
+
+        #加载状态 {
+            margin: 10vw 2vw;
+        }
+
+        .清除 {
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAABTUlEQVR4nO2aSw7CMAxEcxpA4iJQVXD/AyDBCRArSEVnQUSbfhIndudJXpt5iUqc1jlCCCGEEEIIIYs4+DoX6Hvuexdl7+vm6+XrKti3C//09fB1FOz7A8K/+5KSgPDoW0RCGF5KQhi+mITGfcOGPwQS2gw920jPJkPPUU7u/2rk2AlDK49el4S9ZiEhodrwIKeE6sODHBLUhAcpJagLD1JIUBserJGgPjxYIsFMeDBHgrnwYIoEs+FB7AgrfaQuwthOMLvyIVMlmAwPYhJMh+8Ye+ClHKCqJBbetISp4U1K2PTf4JRDjuTNkihzTnjmJCw53pqRsOZsr15CisFGrYSUU506CTlGWjUScs7z1UuQuMyoVoLkTU51Ejb/cnTnhl+P55znh3bC3RX4RiCUIHWZEUooEh5AgvRNDiQUDQ82/ZEUIYQQQgghhKjkA1NM29qMIKVnAAAAAElFTkSuQmCC);
+        }
+
+        .复制 {
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAAA9CAYAAAAeYmHpAAAACXBIWXMAAAsTAAALEwEAmpwYAAABd0lEQVRoge3bsSuFURjH8SdiQimLkpvFP8BoNxhMNpNB+RcMkihlMgqTDeVfwKZsNptN3XKLK4rid8Jy3/c5LzrnfZ5uv199t/d2zme4d3qvSPn60Aq6Qs/ow0HTyl2TbAhdOkDWij5xAKwVPeUAVzt6zQGudvReyWEvaNtBY7nQByXoh1yHeRnRQnT3jmj5PXoWnaLb7+ctukfXaBON5ET3osOSz1jXRDO50FsOgFot1EiNHkWvDnCx9lOjlxygqmqmRq8rB4UftGODbpT7DKREa9/n/qpDMm1Vuc9w1QeJFqILI1qINhnRQnR8RAvRhREtRJuMaCE6PqKF6MKIFqJNRrQQHR/RQnRhRAvRJvs3OryrtdDRvPJs16D/MqKFaJMRLUSnG9FCtMmIFqLTbUM5ZEds3vy/UO4zmBK9rBziqVZKcNg4enMAi3WUGh226wCm1UaTOdDhR+vMAbCzJzSXA/yzHrSIztGjIfQd3cnX36wmYhf+BK4dBHcfth9iAAAAAElFTkSuQmCC);
+        }
+
+        textarea {
+            background-color: transparent;
+            width: 100%;
+            height: 100%;
+            resize: none;
+            font-size: 8vw;
+        }
+
+        #俩框 > div {
+            position: relative;
+            padding: 1vw;
+            width: 100%;
+            height: 50vw;
+        }
+
+        #俩框 > div > div {
+            position: absolute;
+            display: flex;
+            justify-content: space-between;
+
+            bottom: 3vw;
+            right: 3vw;
+        }
+
+        @media (min-width: 720px) {
+            header {
+                height: 3vw;
+            }
+
+            h1 {
+                font-size: 2vw;
+                width: 10vw;
+            }
+
+            button {
+                width: 3vw;
+                height: 3vw;
+                background-size: 1.5vw;
+            }
+
+            #背景 {
+                width: 100%;
+                height: auto;
+            }
+
+            #俩框 {
+                margin: 5vw 8vw;
+                padding: 0 5vw;
+            }
+
+            #加载状态 {
+                margin: 5vw 2vw;
+            }
+
+            textarea {
+                font-size: 1.5vw;
+            }
+
+            #俩框 > div {
+                width: 50%;
+                height: 12.5vw;
+            }
+
+            #俩框 > div > div {
+                bottom: 1vw;
+                right: 1vw;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>喵喵隐者8</h1>
+    <a href="https://gxlt.lanpw.com/ifGI81mb629c" target="_blank" rel="noopener">安卓版</a>
+</header>
+<div id="俩框">
+    <div id="原文区">
+        <textarea autocomplete="off" placeholder="原文"></textarea>
+        <div>
+            <button class="复制"></button>
+            <button class="清除"></button>
+        </div>
+    </div>
+    <div id="密文区">
+        <textarea autocomplete="off" placeholder="密文"></textarea>
+        <div>
+            <button class="复制"></button>
+            <button class="清除"></button>
+        </div>
+    </div>
+</div>
+<div id="加载状态">加载中……</div>
+<script>
+    function 复制() {
+        document.execCommand('copy')
+    }
+
+    const 原文框 = document.querySelector('#原文区 textarea')
+    const 密文框 = document.querySelector('#密文区 textarea')
+
+    var Module = {
+        postRun: () => {
+            document.getElementById('加载状态').hidden = true
+            document.getElementById('俩框').style.display = 'flex'
+            原文框.focus()
+        }
+    }
+
+    function 编码(原文) {
+        return Module.encode(原文)
+    }
+
+    function 解码(密文) {
+        return Module.decode(密文)
+    }
+
+    原文框.oninput = () => {
+        密文框.value = 编码(原文框.value)
+    }
+
+    密文框.oninput = () => {
+        原文框.value = 解码(密文框.value)
+    }
+
+    document.querySelector('#原文区 .复制').onclick = () => {
+        原文框.select()
+        复制()
+    }
+
+    document.querySelector('#密文区 .复制').onclick = () => {
+        密文框.select()
+        复制()
+    }
+
+    document.querySelector('#原文区 .清除').onclick = () => {
+        原文框.value = ''
+        密文框.value = ''
+        原文框.focus()
+    }
+
+    document.querySelector('#密文区 .清除').onclick = () => {
+        密文框.value = ''
+        原文框.value = ''
+        密文框.focus()
+    }
+</script>
+<script src="index.js"></script>
+</body>
+</html>
